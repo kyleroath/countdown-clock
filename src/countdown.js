@@ -1,4 +1,4 @@
-const staticDate = notes[0].date
+let myDate
 const nowYear = moment().valueOf()
 
 document.getElementById('add-event').addEventListener('click', (e) => {
@@ -6,10 +6,17 @@ document.getElementById('add-event').addEventListener('click', (e) => {
     location.assign('/new_event.html')
 })
 
+document.getElementById('event-select').addEventListener('click', (e) => {
+    const data = notes.filter((f) => {
+        f.includes(e.target.value)
+    })
+    
+})
+
 function runCountdown() {
     const intr = setInterval(() => {
-        eventToScreen(moment(staticDate).countdown().toString())
-        if (nowYear > moment(staticDate).valueOf()) {
+        eventToScreen(moment(myDate).countdown().toString())
+        if (nowYear > moment(myDate).valueOf()) {
             eventToScreen('Event has ended!')
             clearInterval(intr)
         }
@@ -19,4 +26,7 @@ function runCountdown() {
 renderEventList()
 runCountdown()
 
+
 // Debug commands
+
+console.log(myDate)

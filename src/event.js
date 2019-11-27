@@ -10,5 +10,15 @@ document.getElementById('event-name').addEventListener('change', (e) => {
 
 document.getElementById('submit-event').addEventListener('click', (e) => {
     e.preventDefault()
-    eventName.length > 1 && date.length > 1 ? addEvent(eventName, 'Active', date) : console.log('Failed')
+    notes.push({
+        name: eventName,
+        active: 'active',
+        date: date
+    })
+    saveEvents(notes)
+    location.assign('/index.html')
+})
+
+document.getElementById('go-back').addEventListener('click', (e) => {
+    location.assign('/index.html')
 })
