@@ -13,7 +13,8 @@ document.getElementById('submit-event').addEventListener('click', (e) => {
     notes.push({
         name: eventName,
         active: 'active',
-        date: date
+        date: date,
+        order: notes.length + 1
     })
     saveEvents(notes)
     location.assign('/index.html')

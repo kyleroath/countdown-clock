@@ -1,4 +1,4 @@
-let myDate
+let myDate = notes[0].name // Default value - grab the first date
 const nowYear = moment().valueOf()
 
 // DOM Elements
@@ -14,28 +14,31 @@ document.getElementById('go-home').addEventListener('click', (e) => location.ass
 
 document.getElementById('event-select').addEventListener('change', (e) => getEventValue())
 
+window.addEventListener('hashchange', (e) => {
+    console.log(location.hash.substr(1))
+})
+
 function getEventValue () {
     let result = notes.filter((f) => f.name === document.getElementById('event-select').value)
+    console.log(notes)
     myDate = result[0].date
     runCountdown()
-}
-
-function numbCom(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function runCountdown() {
     if (eventScreen.textContent === ''){
         eventScreen.textContent = moment(myDate).countdown().toString()
-        document.getElementById('first-infos').textContent = numbCom(countdown(moment(myDate), null, countdown.SECONDS).seconds)
+        document.getElementById('first-infos').textContent = countdown(moment(myDate), null, countdown.SECONDS).seconds.toLocaleString()
         document.getElementById('second-infos').textContent = Math.floor(countdown(moment(myDate), null, countdown.HOURS).hours / 8)
     }
     const intr = setInterval(() => {
         eventScreen.textContent = moment(myDate).countdown().toString()
-        document.getElementById('first-infos').textContent = numbCom(countdown(moment(myDate), null, countdown.SECONDS).seconds)
+        document.getElementById('first-infos').textContent = countdown(moment(myDate), null, countdown.SECONDS).seconds.toLocaleString()
         document.getElementById('second-infos').textContent = Math.floor(countdown(moment(myDate), null, countdown.HOURS).hours / 8)
         if (nowYear > moment(myDate).valueOf()) {
             eventScreen.textContent = 'event has ended! :('
+            document.getElementById('first-infos').textContent = 'zero'
+            document.getElementById('second-infos').textContent = 'zero'
             clearInterval(intr)
         }
     }, 1000);
@@ -52,8 +55,8 @@ runCountdown()
 
 /* TODO's
 
-- Better render the change in selected countdowns. Right now, it still runs along the initial rundown with no immediate change if new event selected.
-- Clean up and merge code, as preparing for more basic features.
-- Style CSS*
+- Cleanup the rendering above, turning it to a function instead of a copy pasta everywhere
+- Make the add note page work
+- Make the selector work
 
 */
