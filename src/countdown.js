@@ -19,7 +19,7 @@ function getEventValue () {
 function runCountdown() {
     const intr = setInterval(() => {
         eventToScreen(moment(myDate).countdown().toString())
-        eventToScreen(`${moment(myDate).countdown().toString()} until your ${eventDOM.value} ends!`)
+        eventToScreen(`${moment(myDate).countdown().toString()} until ${eventDOM.value} ends!`)
         if (nowYear > moment(myDate).valueOf()) {
             eventToScreen('Event has ended!')
             clearInterval(intr)
