@@ -14,7 +14,7 @@ function saveEvents(events) {
 }
 
 function eventToScreen(content) {
-    document.getElementById('testing').textContent = content
+    document.getElementById('date-shot').textContent = content
 } 
 
 // function renderEventList () {
@@ -27,6 +27,7 @@ function passEvents (n) {
     let eventAdd = document.createElement('option')
     eventAdd.value = n.name
     eventAdd.textContent = n.name
+    // eventAdd.classList.add('dropdown-item')
     document.getElementById('event-select').appendChild(eventAdd)
 }
 
