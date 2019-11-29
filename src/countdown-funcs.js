@@ -24,11 +24,12 @@ function eventToScreen(content) {
 // }
 
 function passEvents (n) {
-    let eventAdd = document.createElement('option')
+    let eventAdd = document.createElement('a')
     eventAdd.value = n.name
     eventAdd.textContent = n.name
-    // eventAdd.classList.add('dropdown-item')
-    document.getElementById('event-select').appendChild(eventAdd)
+    eventAdd.classList.add('dropdown-item')
+    eventAdd.setAttribute('href', `#${n.order}`)
+    document.getElementById('dropdown01').appendChild(eventAdd)
 }
 
 function renderEventList () {
@@ -36,3 +37,19 @@ function renderEventList () {
         passEvents(f)
     })
 }
+
+// Add event functionality
+
+const inputEventNameDOM = document.getElementById('inputEventName')
+const inputEventDateDOM = document.getElementById('inputEventDate')
+const inputSubmit = document.getElementById('submit-btn')
+
+inputSubmit.addEventListener('click', (e) => {
+    notes.push({
+        name: inputEventNameDOM.value,
+        date: inputEventDateDOM.value,
+        order: notes.length + 1
+    })
+    saveEvents(notes)
+    location.assign('')
+})

@@ -34,24 +34,15 @@
           <link href="styles/styles.css" rel="stylesheet">
     </head>
     <body>
-        <form>
-            <!-- <input type="text" id="first-text"> Input text -->
-            <select name="Events" id="event-select">
-            </select>
-            <!-- <select name="Status" id="status-bar">
-                <option value="active">Active</option>
-                <option value="inactive">In-Active</option>
-            </select> -->
-        </form>
         </div>
         <!-- Initialize bootstrap4 -->
             <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
               <h5 class="my-0 mr-md-auto font-weight-normal"> 
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">select event</a>
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><small>select event</small></a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01" id="dropdown01">
-                  <a class="dropdown-item" href="#opt1">Action</a>
+                  <!-- <a class="dropdown-item" href="#opt1">Action</a>
                   <a class="dropdown-item" href="#opt2">Another action</a>
-                  <a class="dropdown-item" href="#opt3">Something else here</a>
+                  <a class="dropdown-item" href="#opt3">Something else here</a> -->
                 </div>
               </h5>
               <nav class="my-2 my-md-0 mr-md-3">
@@ -60,7 +51,49 @@
                 <a class="p-2 text-dark" href="#">Support</a>
                 <a class="p-2 text-dark" href="#">Pricing</a> -->
               </nav>
-              <a class="btn btn-outline-primary" href="#" id='new-event'>add event!</a>
+            <!-- Button trigger modal -->
+            <button type="button" id="new-event" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter">
+              add event!
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">add a new event</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Body form test -->
+                    <form class="form-signin">
+                      <div class="text-center mb-4">
+                        <!-- <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
+                        <h1 class="h3 mb-3 font-weight-normal">your event details</h1>
+                        <p>with the details below you can add your very first event <a class="font-weight-bold">OR</a> add to your existing lists of events!</p>
+                      </div>
+                    
+                      <div class="form-label-group">
+                        <input type="textbox" id="inputEventName" class="form-control" placeholder="event name" required autofocus>
+                        <label for="inputEventName">event name</label>
+                      </div>
+                    
+                      <div class="form-label-group">
+                        <input type="date" id="inputEventDate" class="form-control" placeholder="date" required>
+                        <label for="inputEventDate">event date</label>
+                      </div>
+                      <button class="btn btn-lg btn-primary btn-block" type="submit" id="submit-btn" data-dismiss="modal">save</button>
+                      <!-- <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2019</p> -->
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             </div>
             
             <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -90,35 +123,25 @@
                   <div class="col-12 col-md">
                     <!-- <img class="mb-2" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24"> -->
                     <!-- ^ Row for image -->
-                    <small class="d-block mb-3 text-muted">&copy; 2017-2019</small>
+                    <small class="d-block mb-3 text-muted">&copy; 2019 Kyle Roath</small>
                   </div>
                   <div class="col-6 col-md">
-                    <h5>Features</h5>
+                    <h5>Project</h5>
                     <ul class="list-unstyled text-small">
-                      <li><a class="text-muted" href="#">Cool stuff</a></li>
-                      <li><a class="text-muted" href="#">Random feature</a></li>
-                      <li><a class="text-muted" href="#">Team feature</a></li>
-                      <li><a class="text-muted" href="#">Stuff for developers</a></li>
-                      <li><a class="text-muted" href="#">Another one</a></li>
-                      <li><a class="text-muted" href="#">Last time</a></li>
+                      <li><a class="text-muted" href="https://momentjs.com/">momentJS</a></li>
                     </ul>
                   </div>
                   <div class="col-6 col-md">
                     <h5>Resources</h5>
                     <ul class="list-unstyled text-small">
-                      <li><a class="text-muted" href="#">Resource</a></li>
-                      <li><a class="text-muted" href="#">Resource name</a></li>
-                      <li><a class="text-muted" href="#">Another resource</a></li>
-                      <li><a class="text-muted" href="#">Final resource</a></li>
+                      <li><a class="text-muted" href="https://github.com/kyleroath/countdown-clock">GitHub</a></li>
+                      <li><a class="text-muted" href="https://raw.githubusercontent.com/kyleroath/countdown-clock/master/README.md">Latest Docs</a></li>
                     </ul>
                   </div>
                   <div class="col-6 col-md">
                     <h5>About</h5>
                     <ul class="list-unstyled text-small">
-                      <li><a class="text-muted" href="#">Team</a></li>
-                      <li><a class="text-muted" href="#">Locations</a></li>
-                      <li><a class="text-muted" href="#">Privacy</a></li>
-                      <li><a class="text-muted" href="#">Terms</a></li>
+                      <li><a class="text-muted" href="https://github.com/kyleroath">Kyle Roath</a></li>
                     </ul>
                   </div>
                 </div>

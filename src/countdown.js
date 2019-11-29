@@ -1,29 +1,36 @@
-let myDate = notes[0].name // Default value - grab the first date
+let myDate = notes[0].date // Default value
 const nowYear = moment().valueOf()
+
+function getDateUpdate() { // -------------- Not finished, finishing function. Does not correctly pull yet.
+    if (!location.hash) {
+        myDate = notes[0].date // Default value
+    }
+    let result = notes.find((f) => f.order === location.hash.substr(1))
+    console.log(result)
+    // myDate = result[0].date
+}
 
 // DOM Elements
 const eventDOM = document.getElementById('event-select')
 let eventScreen = document.getElementById('date-shot')
 
-document.getElementById('new-event').addEventListener('click', (e) => {
-    e.preventDefault()
-    location.assign('/new_event.html')
-})
+// document.getElementById('new-event').addEventListener('click', (e) => {
+//     e.preventDefault()
+//     location.assign('/new_event.html')
+// })
 
 document.getElementById('go-home').addEventListener('click', (e) => location.assign(''))
-
-document.getElementById('event-select').addEventListener('change', (e) => getEventValue())
 
 window.addEventListener('hashchange', (e) => {
     console.log(location.hash.substr(1))
 })
 
-function getEventValue () {
-    let result = notes.filter((f) => f.name === document.getElementById('event-select').value)
-    console.log(notes)
-    myDate = result[0].date
-    runCountdown()
-}
+// function getEventValue () {
+//     let result = notes.filter((f) => f.name === document.getElementById('event-select').value)
+//     console.log(notes)
+//     myDate = result[0].date
+//     runCountdown()
+// }
 
 function runCountdown() {
     if (eventScreen.textContent === ''){
@@ -48,15 +55,15 @@ function runCountdown() {
 // Run initilization commands, to merge a lot of these after basic functionality is achieved. 
 
 renderEventList()
-getEventValue()
+// getEventValue()
 runCountdown()
 
 // Debug commands
 
 /* TODO's
 
-- Cleanup the rendering above, turning it to a function instead of a copy pasta everywhere
-- Make the add note page work
-- Make the selector work
+- Finish integrating the selector (can assign hash but cannot be used or called yet)
+- Fix issue where adding a new note and calling the list again adds duplicates. Need a catch for cases where the item is already present. For now called a refresh (probably will if statement for existing)
+- 
 
 */
