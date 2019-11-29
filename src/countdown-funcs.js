@@ -33,6 +33,7 @@ function passEvents (n) {
 }
 
 function renderEventList () {
+    document.getElementById('dropdown01').innerHTML = ''
     notes.forEach((f) => {
         passEvents(f)
     })
@@ -51,5 +52,24 @@ inputSubmit.addEventListener('click', (e) => {
         order: notes.length + 1
     })
     saveEvents(notes)
-    location.assign('')
+    $('#alert-container').bs_success(`your new event has been added`, 'much wow!')
+    renderEventList()
 })
+
+// Emoji fun
+
+let emojiList = [
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/232/smiling-face-with-open-mouth-and-cold-sweat_1f605.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/232/upside-down-face_1f643.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/72/apple/232/sleeping-face_1f634.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/72/apple/232/see-no-evil-monkey_1f648.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/72/apple/232/person-with-folded-hands_1f64f.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/72/apple/232/eyes_1f440.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/72/apple/232/ok-hand-sign_1f44c.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/72/apple/232/person-raising-both-hands-in-celebration_1f64c.png",
+    "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/72/apple/232/selfie_1f933.png",
+  ];
+  
+  let randomEmoji = emojiList[Math.floor(Math.random()*emojiList.length)];
+
+  document.getElementById('emoji-container').setAttribute('src', randomEmoji)
