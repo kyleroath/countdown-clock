@@ -56,8 +56,17 @@ inputSubmit.addEventListener('click', (e) => {
     renderEventList()
 })
 
+//Empty check
+
+function isEmptyCheck() {
+    if (notes.length = 0) {
+        myDate = '3000-01-01'
+    }
+}
+
 // Emoji fun
 
+function randoEmoji() {
 let emojiList = [
     "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/232/smiling-face-with-open-mouth-and-cold-sweat_1f605.png",
     "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/232/upside-down-face_1f643.png",
@@ -69,7 +78,6 @@ let emojiList = [
     "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/72/apple/232/person-raising-both-hands-in-celebration_1f64c.png",
     "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/72/apple/232/selfie_1f933.png",
   ];
-  
   let randomEmoji = emojiList[Math.floor(Math.random()*emojiList.length)];
-
   document.getElementById('emoji-container').setAttribute('src', randomEmoji)
+}

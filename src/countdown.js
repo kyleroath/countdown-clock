@@ -2,15 +2,6 @@ let myDate = notes[0].date // Static set while debugging
 let myDateText = notes[0].name
 const nowYear = moment().valueOf()
 
-function getDateUpdate() { // -------------- Not finished, finishing function. Does not correctly pull yet.
-    if (!location.hash) {
-        myDate = notes[0].date // Default value
-    }
-    let result = notes.find((f) => f.order === location.hash.substr(1))
-    console.log(result)
-    // myDate = result[0].date
-}
-
 // DOM Elements
 const eventDOM = document.getElementById('event-select')
 let eventScreen = document.getElementById('date-shot')
@@ -26,6 +17,7 @@ $('#dropdown01').click((e) => {
     myDate = result.date
     myDateText = result.name
     runCountdown()
+    randoEmoji()
  })
 
 function runCountdown() {
@@ -54,6 +46,7 @@ function runCountdown() {
 
 renderEventList()
 runCountdown()
+randoEmoji()
 
 // Debug commands
 
