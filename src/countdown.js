@@ -1,5 +1,19 @@
-let myDate = notes[0].date // Static set while debugging
-let myDateText = notes[0].name
+let myDate
+let myDateText
+
+function getDatesInfo() {
+    if (notes.length === 0) {
+        myDate = '3000-01-01'
+        myDateText = 'far future'
+        $('#warning-container').bs_warning(`..it looks like you don't have any events, why not add one? `, 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/232/waving-hand-sign_emoji-modifier-fitzpatrick-type-1-2_1f44b-1f3fb_1f3fb.png')
+    } else {
+        myDate = notes[0].date
+        myDateText = notes[0].name
+    }
+}
+
+getDatesInfo()
+
 const nowYear = moment().valueOf()
 
 // DOM Elements
@@ -26,6 +40,9 @@ function runCountdown() {
         document.getElementById('first-infos').textContent = countdown(moment(myDate), null, countdown.SECONDS).seconds.toLocaleString()
         document.getElementById('second-infos').textContent = Math.floor(countdown(moment(myDate), null, countdown.HOURS).hours / 8)
         document.getElementById('inf-box').textContent = `until ${myDateText.toLowerCase()}`
+    } else if (myDate === null) {
+        myDate = '3000-01-01'
+        document.getElementById('inf-box').textContent = 'default event create your first one above!'
     }
     const intr = setInterval(() => {
         eventScreen.textContent = moment(myDate).countdown().toString()
@@ -41,6 +58,27 @@ function runCountdown() {
         }
     }, 1000);
 } 
+
+// Add event functionality
+
+const inputEventNameDOM = document.getElementById('inputEventName')
+const inputEventDateDOM = document.getElementById('inputEventDate')
+const inputSubmit = document.getElementById('submit-btn')
+
+inputSubmit.addEventListener('click', (e) => {
+    notes.push({
+        name: inputEventNameDOM.value,
+        date: inputEventDateDOM.value,
+        order: notes.length + 1
+    })
+    saveEvents(notes)
+    $('#alert-container').bs_success(`your new event has been added`, 'much wow!')
+    document.getElementById('warning-container').innerHTML = ''
+    myDate = inputEventDateDOM.value
+    myDateText  = inputEventNameDOM.value
+    renderEventList()
+    runCountdown()
+})
 
 // Run initilization commands, to merge a lot of these after basic functionality is achieved. 
 
@@ -60,14 +98,19 @@ randoEmoji()
   // Deletion stuffs
 
 $('#delete-btn').click(() => {
+    if (myDateText === 'far future') {
+        $('#alert-container').bs_fail('you must add an event first, this is the default', 'wait..')
+    } else {
     let result = notes.findIndex((f) => f.name === myDateText)
     $('#alert-container').bs_fail('has been deleted', myDateText)
     notes.splice(result, 1)
-    myDate = notes[0].date
-    myDateText = notes[0].name
+    getDatesInfo()
+    // myDate = notes[0].date
+    // myDateText = notes[0].name
     renderEventList()
     runCountdown()
     saveEvents(notes)
+}
 })
 
   document.getElementById('inf-sec-del').textContent = `are you sure you want to delete this event?`
@@ -78,5 +121,6 @@ $('#delete-btn').click(() => {
 - Fix deprecation code on date select
 - Add current event in text fade next to select event
 - Incorporate name of event added/deleted into their alerts.
+
 
 */

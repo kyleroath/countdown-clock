@@ -1,4 +1,3 @@
-let events = []
 const notes = getSavedEvents()
 
 
@@ -38,23 +37,6 @@ function renderEventList () {
         passEvents(f)
     })
 }
-
-// Add event functionality
-
-const inputEventNameDOM = document.getElementById('inputEventName')
-const inputEventDateDOM = document.getElementById('inputEventDate')
-const inputSubmit = document.getElementById('submit-btn')
-
-inputSubmit.addEventListener('click', (e) => {
-    notes.push({
-        name: inputEventNameDOM.value,
-        date: inputEventDateDOM.value,
-        order: notes.length + 1
-    })
-    saveEvents(notes)
-    $('#alert-container').bs_success(`your new event has been added`, 'much wow!')
-    renderEventList()
-})
 
 //Empty check
 
