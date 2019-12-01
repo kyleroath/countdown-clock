@@ -99,7 +99,7 @@ randoEmoji()
 
 $('#delete-btn').click(() => {
     if (myDateText === 'far future') {
-        $('#alert-container').bs_fail('you must add an event first, this is the default', 'wait..')
+        $('#alert-container').bs_fail('you do not have any events to delete currently (the one above is a default), add one now', 'whoa!')
     } else {
     let result = notes.findIndex((f) => f.name === myDateText)
     $('#alert-container').bs_fail('has been deleted', myDateText)

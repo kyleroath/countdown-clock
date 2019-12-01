@@ -25,9 +25,9 @@ function eventToScreen(content) {
 function passEvents (n) {
     let eventAdd = document.createElement('a')
     eventAdd.value = n.name
-    eventAdd.textContent = n.name
+    eventAdd.textContent = n.name.toLowerCase()
     eventAdd.classList.add('dropdown-item')
-    eventAdd.setAttribute('href', `#${n.order}`)
+    // eventAdd.setAttribute('href', `#${n.order}`)
     document.getElementById('dropdown01').appendChild(eventAdd)
 }
 
