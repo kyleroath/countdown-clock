@@ -16,11 +16,12 @@ function eventToScreen(content) {
     document.getElementById('date-shot').textContent = content
 } 
 
-// function renderEventList () {
-//     let eventAdd = document.createElement('option')
-//     eventAdd.textContent = notes[0].name
-//     document.getElementById('event-select').appendChild(eventAdd)
-// }
+function rollEvents () {
+    eventScreen.textContent = moment(myDate).countdown().toString()
+    document.getElementById('first-infos').textContent = countdown(moment(myDate), null, countdown.SECONDS).seconds.toLocaleString()
+    document.getElementById('second-infos').textContent = Math.floor(countdown(moment(myDate), null, countdown.HOURS).hours / 8)
+    document.getElementById('inf-box').textContent = `until ${myDateText.toLowerCase()}`
+}
 
 function passEvents (n) {
     let eventAdd = document.createElement('a')
@@ -32,10 +33,14 @@ function passEvents (n) {
 }
 
 function renderEventList () {
+    if (notes.length === 0) {
+       document.getElementById('dropdown01').textContent = 'no events' 
+    } else {
     document.getElementById('dropdown01').innerHTML = ''
     notes.forEach((f) => {
         passEvents(f)
     })
+    } 
 }
 
 //Empty check

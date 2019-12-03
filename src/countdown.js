@@ -36,24 +36,19 @@ $('#dropdown01').click((e) => {
 
 function runCountdown() {
     if (eventScreen.textContent === ''){
-        eventScreen.textContent = moment(myDate).countdown().toString()
-        document.getElementById('first-infos').textContent = countdown(moment(myDate), null, countdown.SECONDS).seconds.toLocaleString()
-        document.getElementById('second-infos').textContent = Math.floor(countdown(moment(myDate), null, countdown.HOURS).hours / 8)
-        document.getElementById('inf-box').textContent = `until ${myDateText.toLowerCase()}`
+        rollEvents()
     } else if (myDate === null) {
         myDate = '3000-01-01'
         document.getElementById('inf-box').textContent = 'default event create your first one above!'
     }
     const intr = setInterval(() => {
-        eventScreen.textContent = moment(myDate).countdown().toString()
-        document.getElementById('first-infos').textContent = countdown(moment(myDate), null, countdown.SECONDS).seconds.toLocaleString()
-        document.getElementById('second-infos').textContent = Math.floor(countdown(moment(myDate), null, countdown.HOURS).hours / 8)
-        document.getElementById('inf-box').textContent = `until ${myDateText.toLowerCase()}`
+        rollEvents()
         if (nowYear > moment(myDate).valueOf()) {
             eventScreen.textContent = 'event has ended! :('
             document.getElementById('first-infos').textContent = 'zero'
             document.getElementById('second-infos').textContent = 'zero'
             document.getElementById('inf-box').textContent = ''
+            $('#current-event').text('')
             clearInterval(intr)
         }
     }, 1000);
