@@ -1,133 +1,121 @@
+// Run imports for webpack
+
 import 'bootstrap'
 import $ from 'jquery'
 import 'moment-countdown'
 import moment from 'moment'
-import { saveEvents, rollEvents, renderEventList, notes, randoEmoji } from './countdown-funcs'
+import countdown from 'countdown'
+import myNotes, { randoEmoji, el } from './countdown-funcs'
 import './alerts'
 
-let myDate
-let myDateText
-function myDateEdit(dateEdit, txtEdit) {
-    myDate = dateEdit
-    myDateText = txtEdit
+const defaults = { // Default values if no events
+    date: '3000-01-01',
+    text: 'far future'
 }
 
-export { myDate, myDateText, myDateEdit }
-
-function getDatesInfo() {
-    if (notes.length === 0) {
-        myDate = '3000-01-01'
-        myDateText = 'far future'
-        $('#warning-container').bs_warning(`..it looks like you don't have any events, why not add one? `, 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/232/waving-hand-sign_emoji-modifier-fitzpatrick-type-1-2_1f44b-1f3fb_1f3fb.png')
-    } else {
-        myDate = notes[0].date
-        myDateText = notes[0].name
+class myEvent {
+    constructor(date, currentDate, text) {
+        this.getDatesInfo()
+        this.currentDate = moment().valueOf()
+    }
+    setDate(d, t) {
+        this.date = d
+        this.text = t
+        
+    }
+    setDefault() {
+        this.date = defaults.date
+        this.text = defaults.text
+    }
+    getDatesInfo() {
+        if (myNotes.notes.length === 0) {
+            this.setDefault()
+            $('#warning-container').bs_warning(`..it looks like you don't have any events, why not add one? `, 
+            'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/232/waving-hand-sign_emoji-modifier-fitzpatrick-type-1-2_1f44b-1f3fb_1f3fb.png')
+        } else {
+        this.date = myNotes.notes[0].date
+        this.text = myNotes.notes[0].name
+        }
+    }
+    rollEvents(stage) {
+        if (stage) {
+            el.eventScreen.textContent = moment(this.date).countdown().toString()
+            el.firstInfo.textContent = countdown(moment(this.date), null, countdown.SECONDS).seconds.toLocaleString()
+            el.secondInfo.textContent = Math.floor(countdown(moment(this.date), null, countdown.HOURS).hours / 8)
+            el.infoBox.textContent = `until ${this.text.toLowerCase()}`
+        } else if (!stage) {
+            el.eventScreen.textContent = 'event has ended! :('
+            el.firstInfo.textContent = 'zero'
+            el.secondInfo.textContent = 'zero'
+            el.infoBox.textContent = ''
+            $('#current-event').text('')
+        }
+    }
+    runCountdown() {
+        if (el.eventScreen.textContent === ''){
+            this.rollEvents(true)
+        } else if (this.date === defaults.date) {
+            this.setDefault()
+            el.infoBox.textContent = 'default event create your first one above!'
+        }
+        const intr = setInterval(() => {
+            this.rollEvents(true)
+            if (this.currentDate > moment(this.date).valueOf()) {
+                this.rollEvents(false)
+                clearInterval(intr)
+            }
+        }, 1000);
     }
 }
 
-getDatesInfo()
+const thisEvent = new myEvent()
 
-const nowYear = moment().valueOf()
+export { thisEvent as default }
 
-// DOM Elements
-const eventDOM = document.getElementById('event-select')
-let eventScreen = document.getElementById('date-shot')
+// Home button (refresh)
+el.goHome.addEventListener('click', (e) => location.assign(''))
 
-document.getElementById('go-home').addEventListener('click', (e) => location.assign(''))
-
-// window.addEventListener('hashchange', (e) => {
-//     console.log(location.hash.substr(1))                    // Too be used when UUID may be introduced in future.
-// })
-
-$('#dropdown01').click((e) => {
-    let result = notes.find((f) => f.name === e.target.text)
-    myDate = result.date
-    myDateText = result.name
-    runCountdown()
+// Dropdown click event
+$('#dropdown01').click((e) => { 
+    let result = myNotes.notes.find((f) => f.name === e.target.text)
+    thisEvent.setDate(result.date, result.name)
+    thisEvent.runCountdown()
     randoEmoji()
  })
 
-function runCountdown() {
-    if (eventScreen.textContent === ''){
-        rollEvents()
-    } else if (myDate === null) {
-        myDate = '3000-01-01'
-        document.getElementById('inf-box').textContent = 'default event create your first one above!'
-    }
-    const intr = setInterval(() => {
-        rollEvents()
-        if (nowYear > moment(myDate).valueOf()) {
-            eventScreen.textContent = 'event has ended! :('
-            document.getElementById('first-infos').textContent = 'zero'
-            document.getElementById('second-infos').textContent = 'zero'
-            document.getElementById('inf-box').textContent = ''
-            $('#current-event').text('')
-            clearInterval(intr)
-        }
-    }, 1000);
-} 
-
-// Add event functionality
-
-const inputEventNameDOM = document.getElementById('inputEventName')
-const inputEventDateDOM = document.getElementById('inputEventDate')
-const inputSubmit = document.getElementById('submit-btn')
-
-inputSubmit.addEventListener('click', (e) => {
-    notes.push({
-        name: inputEventNameDOM.value,
-        date: inputEventDateDOM.value,
-        order: notes.length + 1
+ //New event stuffs
+el.inputSubmit.addEventListener('click', (e) => { 
+    myNotes.notes.push({
+    name: el.inputEventNameDOM.value,
+    date: el.inputEventDateDOM.value,
+    order: myNotes.notes.length + 1
     })
-    saveEvents(notes)
+    myNotes.saveEvents()
     $('#alert-container').bs_success(`your new event has been added`, 'much wow!')
-    document.getElementById('warning-container').innerHTML = ''
-    myDate = inputEventDateDOM.value
-    myDateText  = inputEventNameDOM.value
-    renderEventList()
-    runCountdown()
+    el.warningBox.innerHTML = ''
+    thisEvent.setDate(el.inputEventDateDOM.value, el.inputEventNameDOM.value)
+    myNotes.renderEventList()
+    thisEvent.runCountdown()
 })
-
-// Run initilization commands, to merge a lot of these after basic functionality is achieved. 
-
-renderEventList()
-runCountdown()
-randoEmoji()
-
-// Debug commands
-
-// $("#modalButton").click(function(e){
-//         $('#alert-container').bs_success(`your new event has been added`, 'much wow!')
-// })
-
-// document.getElementById('title').textContent = myDateText // May re-add back in future, not sure
-
 
   // Deletion stuffs
-
-$('#delete-btn').click(() => {
-    if (myDateText === 'far future') {
-        $('#alert-container').bs_fail('you do not have any events to delete currently (the one above is a default), add one now', 'whoa!')
+  el.infoDel.textContent = `are you sure you want to delete this event?`
+  $("#delete-btn").click(() => {
+    if (myNotes.notes.length === 0) {
+      $("#alert-container").bs_fail("you do not have any events to delete currently (the one above is a default), add one now", "whoa!")
     } else {
-    let result = notes.findIndex((f) => f.name === myDateText)
-    $('#alert-container').bs_fail('has been deleted', myDateText)
-    notes.splice(result, 1)
-    getDatesInfo()
-    // myDate = notes[0].date
-    // myDateText = notes[0].name
-    renderEventList()
-    runCountdown()
-    saveEvents(notes)
-}
-})
+      let result = myNotes.notes.findIndex(f => f.name === thisEvent.text)
+      $("#alert-container").bs_fail("has been deleted", thisEvent.text)
+      myNotes.notes.splice(result, 1)
+      thisEvent.getDatesInfo()
+      myNotes.renderEventList()
+      thisEvent.runCountdown()
+      myNotes.saveEvents()
+    }
+  });  
 
-  document.getElementById('inf-sec-del').textContent = `are you sure you want to delete this event?`
+  // Run functions
 
-/* TODO's
-
-- Fix deprecation code on date select
-- Add current event in text fade next to select event
-- Incorporate name of event added/deleted into their alerts.
-
-
-*/
+  myNotes.renderEventList()
+  thisEvent.runCountdown()
+  randoEmoji()

@@ -1,58 +1,53 @@
-import moment from 'moment'
-import countdown from 'countdown'
 import 'moment-countdown'
-import { myDate, myDateText, myDateEdit } from './countdown'
+// import thisEvent from './countdown' // Importing the event class, not currently used here. To be used.
 
 
-const notes = getSavedEvents()
-
-
-function getSavedEvents() {
-
-    const eventsJSON = localStorage.getItem('events')
-
-    return eventsJSON ? JSON.parse(eventsJSON) : []
+// DOM Elements
+export const el = {
+    eventScreen: document.getElementById('date-shot'),
+    infoBox: document.getElementById('inf-box'),
+    firstInfo: document.getElementById('first-infos'),
+    secondInfo: document.getElementById('second-infos'),
+    dropDown: document.getElementById('dropdown01'),
+    goHome: document.getElementById('go-home'),
+    inputEventNameDOM: document.getElementById('inputEventName'),
+    inputEventDateDOM: document.getElementById('inputEventDate'),
+    inputSubmit: document.getElementById('submit-btn'),
+    warningBox: document.getElementById('warning-container'),
+    infoDel: document.getElementById('inf-sec-del')
 }
 
-function saveEvents(events) {
-    localStorage.setItem('events', JSON.stringify(events))
-}
-
-
-function rollEvents () {
-    document.getElementById('date-shot').textContent = moment(myDate).countdown().toString()
-    document.getElementById('first-infos').textContent = countdown(moment(myDate), null, countdown.SECONDS).seconds.toLocaleString()
-    document.getElementById('second-infos').textContent = Math.floor(countdown(moment(myDate), null, countdown.HOURS).hours / 8)
-    document.getElementById('inf-box').textContent = `until ${myDateText.toLowerCase()}`
-}
-
-function passEvents (n) {
-    let eventAdd = document.createElement('a')
-    eventAdd.value = n.name
-    eventAdd.textContent = n.name.toLowerCase()
-    eventAdd.classList.add('dropdown-item')
-    // eventAdd.setAttribute('href', `#${n.order}`)
-    document.getElementById('dropdown01').appendChild(eventAdd)
-}
-
-function renderEventList () {
-    if (notes.length === 0) {
-       document.getElementById('dropdown01').textContent = 'no events' 
-    } else {
-    document.getElementById('dropdown01').innerHTML = ''
-    notes.forEach((f) => {
-        passEvents(f)
-    })
-    } 
-}
-
-//Empty check
-
-function isEmptyCheck() {
-    if (notes.length = 0) {
-        myDateEdit('3000-01-01')
+class savedNotes {
+    constructor(notes) {
+        this.notes = this.getSavedEvents()
+    }
+    getSavedEvents() {
+        const eventsJSON = localStorage.getItem('events')
+        return eventsJSON ? JSON.parse(eventsJSON) : []
+    }
+    saveEvents() {
+        localStorage.setItem('events', JSON.stringify(this.notes))
+    }
+    passEvents(n) {
+        let eventAdd = document.createElement('a')
+        eventAdd.value = n.name
+        eventAdd.textContent = n.name.toLowerCase()
+        eventAdd.classList.add('dropdown-item')
+        el.dropDown.appendChild(eventAdd)
+    }
+    renderEventList() {
+        if (myNotes.notes.length === 0) {
+            el.dropDown.textContent = 'no events' 
+         } else {
+             el.dropDown.innerHTML = ''
+             this.notes.forEach((f) => {
+                 this.passEvents(f)
+            })
+        } 
     }
 }
+
+const myNotes = new savedNotes()
 
 // Emoji fun
 
@@ -72,4 +67,4 @@ let emojiList = [
   document.getElementById('emoji-container').setAttribute('src', randomEmoji)
 }
 
-export { saveEvents, rollEvents, renderEventList, notes, randoEmoji }
+export { myNotes as default, randoEmoji }
