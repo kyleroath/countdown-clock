@@ -1,3 +1,9 @@
+import moment from 'moment'
+import countdown from 'countdown'
+import 'moment-countdown'
+import { myDate, myDateText, myDateEdit } from './countdown'
+
+
 const notes = getSavedEvents()
 
 
@@ -12,12 +18,9 @@ function saveEvents(events) {
     localStorage.setItem('events', JSON.stringify(events))
 }
 
-function eventToScreen(content) {
-    document.getElementById('date-shot').textContent = content
-} 
 
 function rollEvents () {
-    eventScreen.textContent = moment(myDate).countdown().toString()
+    document.getElementById('date-shot').textContent = moment(myDate).countdown().toString()
     document.getElementById('first-infos').textContent = countdown(moment(myDate), null, countdown.SECONDS).seconds.toLocaleString()
     document.getElementById('second-infos').textContent = Math.floor(countdown(moment(myDate), null, countdown.HOURS).hours / 8)
     document.getElementById('inf-box').textContent = `until ${myDateText.toLowerCase()}`
@@ -47,7 +50,7 @@ function renderEventList () {
 
 function isEmptyCheck() {
     if (notes.length = 0) {
-        myDate = '3000-01-01'
+        myDateEdit('3000-01-01')
     }
 }
 
@@ -68,3 +71,5 @@ let emojiList = [
   let randomEmoji = emojiList[Math.floor(Math.random()*emojiList.length)];
   document.getElementById('emoji-container').setAttribute('src', randomEmoji)
 }
+
+export { saveEvents, rollEvents, renderEventList, notes, randoEmoji }

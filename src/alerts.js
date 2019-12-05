@@ -1,4 +1,6 @@
-(function($){
+import jQuery from 'jquery'
+
+const alerts = (function($){
     $.fn.extend({
         bs_success: function(message, title){
             var cls='alert-success';
@@ -30,4 +32,4 @@
     });
 })(jQuery);
 
-// To be refactored to use template strings and not concations 
+export { alerts }

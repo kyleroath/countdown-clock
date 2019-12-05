@@ -1,5 +1,18 @@
+import 'bootstrap'
+import $ from 'jquery'
+import 'moment-countdown'
+import moment from 'moment'
+import { saveEvents, rollEvents, renderEventList, notes, randoEmoji } from './countdown-funcs'
+import './alerts'
+
 let myDate
 let myDateText
+function myDateEdit(dateEdit, txtEdit) {
+    myDate = dateEdit
+    myDateText = txtEdit
+}
+
+export { myDate, myDateText, myDateEdit }
 
 function getDatesInfo() {
     if (notes.length === 0) {
@@ -109,7 +122,6 @@ $('#delete-btn').click(() => {
 })
 
   document.getElementById('inf-sec-del').textContent = `are you sure you want to delete this event?`
-
 
 /* TODO's
 
