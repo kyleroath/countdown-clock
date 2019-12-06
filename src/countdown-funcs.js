@@ -10,8 +10,8 @@ export const el = {
     secondInfo: document.getElementById('second-infos'),
     dropDown: document.getElementById('dropdown01'),
     goHome: document.getElementById('go-home'),
-    inputEventNameDOM: document.getElementById('inputEventName'),
-    inputEventDateDOM: document.getElementById('inputEventDate'),
+    eventName: document.getElementById('inputEventName'),
+    eventDate: document.getElementById('inputEventDate'),
     inputSubmit: document.getElementById('submit-btn'),
     warningBox: document.getElementById('warning-container'),
     infoDel: document.getElementById('inf-sec-del')
