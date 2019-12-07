@@ -107,7 +107,6 @@ el.inputSubmit.addEventListener('click', (e) => {
 
 
   // Deletion stuffs
-  el.infoDel.textContent = `are you sure you want to delete this event?`
   $("#delete-btn").click(() => {
     if (myNotes.notes.length === 0) {
       $("#alert-container").bs_fail("you do not have any events to delete currently (the one above is a default), add one now", "whoa!")

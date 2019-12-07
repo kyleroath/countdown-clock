@@ -37009,8 +37009,7 @@ var el = exports.el = {
     eventName: document.getElementById('inputEventName'),
     eventDate: document.getElementById('inputEventDate'),
     inputSubmit: document.getElementById('submit-btn'),
-    warningBox: document.getElementById('warning-container'),
-    infoDel: document.getElementById('inf-sec-del')
+    warningBox: document.getElementById('warning-container')
 };
 
 var savedNotes = function () {
@@ -37238,8 +37237,12 @@ _countdownFuncs.el.inputSubmit.addEventListener('click', function (e) {
     }
 });
 
-// Deletion stuffs
-_countdownFuncs.el.infoDel.textContent = 'are you sure you want to delete this event?';
+// Deletion stuffs\
+(0, _jquery2.default)('#del-menu').click(function () {
+    if (_countdownFuncs2.default.notes.length > 0) {
+        document.getElementById('del-menu').setAttribute('data-target', '#delModal');
+    }
+});
 (0, _jquery2.default)("#delete-btn").click(function () {
     if (_countdownFuncs2.default.notes.length === 0) {
         (0, _jquery2.default)("#alert-container").bs_fail("you do not have any events to delete currently (the one above is a default), add one now", "whoa!");

@@ -13,8 +13,7 @@ export const el = {
     eventName: document.getElementById('inputEventName'),
     eventDate: document.getElementById('inputEventDate'),
     inputSubmit: document.getElementById('submit-btn'),
-    warningBox: document.getElementById('warning-container'),
-    infoDel: document.getElementById('inf-sec-del')
+    warningBox: document.getElementById('warning-container')
 }
 
 class savedNotes {
