@@ -44,7 +44,7 @@ class myEvent {
             el.secondInfo.textContent = Math.floor(countdown(moment(this.date), null, countdown.HOURS).hours / 8)
             el.infoBox.textContent = `until ${this.text.toLowerCase()}`
         } else if (!stage) {
-            el.eventScreen.textContent = 'event has ended! :('
+            el.eventScreen.textContent = `${thisEvent.text} has passed! :(`
             el.firstInfo.textContent = 'zero'
             el.secondInfo.textContent = 'zero'
             el.infoBox.textContent = ''
@@ -77,12 +77,26 @@ el.goHome.addEventListener('click', (e) => location.assign(''))
 
 // Dropdown click event
 $('#dropdown01').click((e) => { 
-    if (!myNotes.notes.length === 0) {
+    if (myNotes.notes.length > 0) {
     let result = myNotes.notes.find((f) => f.name === e.target.text)
+    console.log(result)
     thisEvent.setDate(result.date, result.name)
     thisEvent.runCountdown()
     randoEmoji()
     }
+ })
+
+ // Debug add for testing
+
+ $('#debug-add').click(() => {
+     myNotes.notes.push({
+         name: `debug-event-${myNotes.notes.length + 1}`,
+         date: moment().valueOf() +10000000,
+         order: myNotes.notes.length + 1
+     })
+     myNotes.saveEvents()
+     myNotes.renderEventList()
+     thisEvent.runCountdown()
  })
 
  //New event stuffs
