@@ -79,7 +79,6 @@ el.goHome.addEventListener('click', (e) => location.assign(''))
 $('#dropdown01').click((e) => { 
     if (myNotes.notes.length > 0) {
     let result = myNotes.notes.find((f) => f.name === e.target.text)
-    console.log(result)
     thisEvent.setDate(result.date, result.name)
     thisEvent.runCountdown()
     randoEmoji()
@@ -114,6 +113,8 @@ el.inputSubmit.addEventListener('click', (e) => {
     thisEvent.setDate(el.eventDate.value, el.eventName.value)
     myNotes.renderEventList()
     thisEvent.runCountdown()
+    el.eventName.value = ''
+    el.eventDate.value = ''
     } else {
         $('#alert-container').bs_fail('your event was not added as it did not contain a name, a date OR both!','oops!') // -- To be replaced with something far more dynamic, such as catching this live time in the add event area. Needed to fix bug where it passed in empty object within array.
     }
